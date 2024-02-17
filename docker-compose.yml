@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  cloudflared:
+    container_name: proxy-cloudflared
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARED_TUNNEL_TOKEN}
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
