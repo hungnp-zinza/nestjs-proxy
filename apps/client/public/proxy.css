@@ -1,0 +1,7 @@
+.markup-thread-hover {
+  all: initial !important;
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  pointer-events: none !important;
+  outline: 1px dotted #636567 !important;
+}

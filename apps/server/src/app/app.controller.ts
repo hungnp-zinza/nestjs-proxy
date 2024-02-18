@@ -34,6 +34,19 @@ export class AppController {
     }
     const httpProxy = proxy(target.to, {
       userResDecorator: (proxyRes, proxyResData, userReq, userRes) => {
+        const contentType = userRes.getHeader('content-type');
+        let resData = proxyResData;
+        if (contentType.toString().includes('text/html')) {
+          const htmlContent = Buffer.from(proxyResData).toString('utf-8');
+          const splitHead = htmlContent.split('<head>');
+          if (splitHead.length > 1) {
+            splitHead[0] = `${splitHead[0]}
+              <script src="https://markup.hungnp.com/proxy.js" charset="UTF-8"></script>
+              <link rel="stylesheet" href="https://markup.hungnp.com/proxy.css">
+            `;
+            resData = Buffer.from(splitHead.join('<head>'));
+          }
+        }
         userRes.removeHeader('x-frame-options');
         userRes.removeHeader('referrer-policy');
         userRes.removeHeader('x-xss-protection');
@@ -42,7 +55,7 @@ export class AppController {
           'strict-transport-security',
           'max-age=15724800; includeSubDomains'
         );
-        return proxyResData;
+        return resData;
       },
     });
     httpProxy(req, res, next);
