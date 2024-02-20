@@ -5,3 +5,18 @@
   pointer-events: none !important;
   outline: 1px dotted #636567 !important;
 }
+
+.markup-comment {
+  all: initial !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #ffffff !important;
+  background-color: #1b00fb !important;
+  position: absolute  !important;
+  cursor: pointer !important;
+}
