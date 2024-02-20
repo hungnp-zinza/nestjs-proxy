@@ -56,6 +56,8 @@ interface Comment {
   bbox: Bbox;
   clientX: number;
   clientY: number;
+  pageY: number;
+  pageX: number;
 }
 
 interface PendingComment {
@@ -65,6 +67,8 @@ interface PendingComment {
   bbox: Bbox;
   clientX: number;
   clientY: number;
+  pageY: number;
+  pageX: number;
 }
 
 export default function Index() {
@@ -149,6 +153,8 @@ export default function Index() {
             bbox: data.payload.bbox,
             clientX: data.payload.clientX,
             clientY: data.payload.clientY,
+            pageY: data.payload.pageY,
+            pageX: data.payload.pageX,
           });
         }
       }
@@ -280,45 +286,49 @@ export default function Index() {
           width="300px"
           height={1}
           borderRight="1px solid #e9ebec"
-          overflow="auto"
+          position="relative"
         >
-          {comments.map((comment) => (
-            <Stack
-              borderBottom="1px solid #e9ebec"
-              p={3}
-              key={comment.id}
-              width={1}
-              gap={1}
-              sx={{
-                cursor: 'pointer',
-                '&:hover': {
-                  backgroundColor: '#f5f6f7',
-                },
-              }}
-            >
-              <Stack
-                sx={{
-                  backgroundColor: '#1b00fb',
-                }}
-                color="#ffffff"
-                p={0.5}
-                width="32px"
-                height="32px"
-                borderRadius="50%"
-                alignItems="center"
-                justifyContent="center"
-              >
-                {comment.id}
-              </Stack>
-              <Typography fontWeight={700}>{comment.author}</Typography>
-              <Typography variant="caption">
-                {comment.created_at?.toDateString()}
-              </Typography>
-              <Typography whiteSpace="pre-line" variant="body2">
-                {comment.content}
-              </Typography>
+          <Stack position="absolute" top={0} left={0} right={0} bottom={0}>
+            <Stack width={1} height={1} overflow="auto">
+              {comments.map((comment) => (
+                <Stack
+                  borderBottom="1px solid #e9ebec"
+                  p={3}
+                  key={comment.id}
+                  width={1}
+                  gap={1}
+                  sx={{
+                    cursor: 'pointer',
+                    '&:hover': {
+                      backgroundColor: '#f5f6f7',
+                    },
+                  }}
+                >
+                  <Stack
+                    sx={{
+                      backgroundColor: '#1b00fb',
+                    }}
+                    color="#ffffff"
+                    p={0.5}
+                    width="32px"
+                    height="32px"
+                    borderRadius="50%"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    {comment.id}
+                  </Stack>
+                  <Typography fontWeight={700}>{comment.author}</Typography>
+                  <Typography variant="caption">
+                    {comment.created_at?.toDateString()}
+                  </Typography>
+                  <Typography whiteSpace="pre-line" variant="body2">
+                    {comment.content}
+                  </Typography>
+                </Stack>
+              ))}
             </Stack>
-          ))}
+          </Stack>
         </Stack>
         <Stack flex={1} gap={1}>
           <Stack

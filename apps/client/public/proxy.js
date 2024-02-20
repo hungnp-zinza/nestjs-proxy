@@ -28,11 +28,14 @@ const onClick = (event) => {
             bbox,
             clientY: event.clientY,
             clientX: event.clientX,
+            pageY: event.pageY,
+            pageX: event.pageX,
           },
         },
         'https://markup.hungnp.com'
       );
     } else {
+      console.log(event);
       window.parent.postMessage(
         {
           event: EventType.ThreadClicked,
@@ -40,6 +43,8 @@ const onClick = (event) => {
             bbox,
             clientY: event.clientY,
             clientX: event.clientX,
+            pageY: event.pageY,
+            pageX: event.pageX,
           },
         },
         'https://markup.hungnp.com'
@@ -86,12 +91,12 @@ window.addEventListener('message', (event) => {
         commentElement.classList.add('markup-comment');
         commentElement.style.setProperty(
           'top',
-          `${comment.clientY}px`,
+          `${comment.pageY}px`,
           'important'
         );
         commentElement.style.setProperty(
           'left',
-          `${comment.clientX}px`,
+          `${comment.pageX}px`,
           'important'
         );
         commentElement.innerText = `${comment.id}`;
