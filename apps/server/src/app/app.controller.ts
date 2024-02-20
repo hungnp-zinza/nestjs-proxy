@@ -53,6 +53,9 @@ export class AppController {
         userRes.removeHeader('referrer-policy');
         userRes.removeHeader('x-xss-protection');
         userRes.removeHeader('x-permitted-cross-domain-policies');
+        userRes.removeHeader('content-security-policy');
+        userRes.removeHeader('cross-origin-opener-policy');
+        userRes.removeHeader('content-security-policy-report-only');
         userRes.setHeader(
           'strict-transport-security',
           'max-age=15724800; includeSubDomains'
